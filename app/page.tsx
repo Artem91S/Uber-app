@@ -4,14 +4,7 @@ import SearchForm from "./components/Home/SearchForm";
 import { SourcePlaceContext } from "@/context/SourcePlace";
 import { DestinationPlaceContext } from "@/context/DestinationPlace";
 import { useState } from "react"
-type Values ={
-   source: {
-    lat: number;
-    lng: number;
-    name: string;
-    label: string;
-  };
-}
+import GoogleMaps from "./components/Home/GoogleMap";
 
 export default function Home() {
   const [source, setSource] = useState(null);
@@ -25,7 +18,7 @@ export default function Home() {
             <SearchForm />
           </div>
           <div className=" col-span-2">
-            <GoogleMap />
+            <GoogleMaps /> 
           </div>
         </div>
       </DestinationPlaceContext.Provider>

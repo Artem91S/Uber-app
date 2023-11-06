@@ -5,7 +5,7 @@ import { SourcePlaceContext } from "@/context/SourcePlace";
 import { DestinationPlaceContext } from "@/context/DestinationPlace";
 
 function SearchForm() {
-  const { source} = useContext(SourcePlaceContext);
+  const { source } = useContext(SourcePlaceContext);
   const {destination} = useContext(DestinationPlaceContext);
 
   useEffect(() => {
