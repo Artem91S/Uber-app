@@ -1,8 +1,5 @@
 import { createContext } from "react";
 
-type Values={
-  setSource: () => void
-}
 
 const initialValue ={
   source:{

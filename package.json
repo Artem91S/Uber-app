@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.26.2",
+    "@react-google-maps/api": "^2.19.2",
     "@types/google.maps": "^3.54.6",
     "@types/react-places-autocomplete": "^7.2.12",
     "next": "14.0.1",
