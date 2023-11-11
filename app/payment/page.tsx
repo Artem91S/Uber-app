@@ -11,7 +11,7 @@ function Payment() {
   const amountOfRide = params.get("amount")!;
   const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHER_KEY!);
   const options:StripeElementsOptionsMode = {
-    mode:'payment',
+    mode:"payment",
     amount: Math.round(Number(amountOfRide) * 100),
     currency: 'uah',
   };
