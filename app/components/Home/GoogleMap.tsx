@@ -1,50 +1,159 @@
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import React, { useCallback, useState } from 'react';
+import {
+  DirectionsRenderer,
+  GoogleMap,
+  MarkerF,
+  OverlayView,
+  OverlayViewF,
+} from "@react-google-maps/api";
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 
-type ApiType ={
-  id:string;
-  googleMapsApiKey:string
+export type FieldTypes = {
+  lat: number;
+  lng: number;
+  name: string;
+  label: string;
+} ;
+type Props ={
+  source:FieldTypes;
+  destination:FieldTypes;
 }
-function GoogleMaps() {
+
+function GoogleMapSection({source,destination}:Props) {
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [direction, setDirections] = useState();
+  const [center, setCenter] = useState({
+    lat: 0,
+    lng: 0,
+  });
   const containerStyle = {
-    width: '100%',
-    height: '85vh'
+    width: "100%",
+    height: "85vh",
   };
-  
-  const center = {
-    lat: 51.52297650000001,
-    lng: 31.3303286
+
+  const directionRoute = () => {
+    const DirectionsService = new google.maps.DirectionsService();
+    DirectionsService.route(
+      {
+        origin: { lat: source.lat, lng: source.lng },
+        destination: { lat: destination?.lat!, lng: destination?.lng!},
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result: google.maps.DirectionsResult | null , status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          setDirections(result);
+        } else {
+          console.error("My service error");
+        }
+      }
+    );
   };
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey:process.env.NEXT_PUBLIC_GOOGLE_API_KEY
-  })
+  const changeSource = useMemo(() => {
+    if (source?.name?.length! > 0 && map) {
+      map.panTo({
+        lat: source.lat!,
+        lng: source.lng!,
+      });
+      setCenter({
+        lat: source.lat!,
+        lng: source.lng!,
+      });
+    }
+    if (source?.name.length! > 0 && destination?.name?.length! > 0) {
+      directionRoute();
+    }
+  }, [source]);
 
-  const [map, setMap] = useState(null)
-
-  const onLoad = useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+  const changeDestination = useMemo(() => {
+    if (destination?.name?.length! > 0 && map) {
+      map.panTo({
+        lat: destination?.lat!,
+        lng: destination?.lng!,
+      });
+      setCenter({
+        lat: destination?.lat!,
+        lng: destination?.lng!,
+      });
+    }
+    if (source?.name.length! > 0 && destination?.name.length! > 0) {
+      directionRoute();
+    }
+  }, [destination]);
+  const onLoad = useCallback(function callback(map:google.maps.Map | null) {
     const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
+    map?.fitBounds(bounds);
 
-    setMap(map)
-  }, [])
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null)
-  }, [])
-  return isLoaded ? (
+    setMap(map);
+  }, []);
+  const onUnmount = useCallback(function callback(map: google.maps.Map | null) {
+    setMap(null);
+  }, []);
+  return (
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
       zoom={10}
       onLoad={onLoad}
       onUnmount={onUnmount}
-      // mapTypeId='84953b2403383362'
     >
-      { /* Child components, such as markers, info windows, etc. */ }
-      <></>
+      <MarkerF
+        position={{ lat:source.lat, lng: source.lng }}
+        icon={{
+          url: "/source.png",
+          scaledSize: {
+            equals:Boolean,
+            width: 20,
+            height: 20,
+          },
+        }}
+      >
+        <OverlayViewF
+          position={{ lat:source.lat, lng:source.lng}}
+          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+        >
+          <div className="p-2 bg-white rounded-xl">
+            <p className="uppercase font-bold">from:{source.label}</p>
+          </div>
+        </OverlayViewF>
+      </MarkerF>
+
+      <MarkerF
+        position={{ lat: destination?.lat!, lng: destination?.lng! }}
+        icon={{
+          url: "/dest.png",
+          scaledSize: {
+            equals:Boolean,
+            width: 20,
+            height: 20,
+          },
+        }}
+      >
+        <OverlayViewF
+          position={{ lat: destination?.lat!, lng: destination?.lng! }}
+          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+        >
+          <div className="p-3 bg-white rounded-xl">
+            <p className="uppercase font-bold">to:{destination?.label}</p>
+          </div>
+        </OverlayViewF>
+      </MarkerF>
+
+      <DirectionsRenderer
+        directions={direction}
+        options={{
+          polylineOptions: {
+            strokeColor: "#000",
+            strokeWeight: 3,
+          },
+          suppressMarkers: true,
+        }}
+      />
     </GoogleMap>
-) : <></>
+  );
 }
 
-export default React.memo(GoogleMaps)
+export default GoogleMapSection;
+

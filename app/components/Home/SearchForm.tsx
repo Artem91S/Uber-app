@@ -1,39 +1,61 @@
 "use client";
-import { useContext, useEffect } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useState,
+} from "react";
 import Input from "../Input";
-import { SourcePlaceContext } from "@/context/SourcePlace";
-import { DestinationPlaceContext } from "@/context/DestinationPlace";
+import CarListBlock from "./CarListBlock";
+export type FieldTypes = {
+  lat: number;
+  lng: number;
+  name: string;
+  label: string;
+};
+type Props = {
+  source: FieldTypes;
+  destination: FieldTypes;
+  setSource: Dispatch<SetStateAction<FieldTypes>>;
+  setDestination: Dispatch<SetStateAction<FieldTypes>>;
+};
 
-function SearchForm() {
-  const { source } = useContext(SourcePlaceContext);
-  const {destination} = useContext(DestinationPlaceContext);
+function SearchForm({ source, setSource, destination, setDestination }: Props) {
 
-  useEffect(() => {
-    if(source){
-      console.log(source);
-    }
-    if(destination){
-      console.log(destination);
-    }
-  }, [source,destination]);
-
+  const [distance, setDistance] = useState(0);
+  const calculateTripDistance = () => {
+    const distanceRM = google.maps.geometry.spherical.computeDistanceBetween(
+      { lat: source.lat, lng: source.lng },
+      { lat: destination.lat, lng: destination.lng }
+    )   
+    setDistance(+((distanceRM* 0.001653).toFixed(2)))
+  };
   return (
-  <>
-    <div className=" m-3 border-2 border-gray-400 rounded-xl p-3 flex flex-col gap-6">
-      <h3 className="text-[20px] font-bold">Get a ride</h3>
-      <Input type="source" />
-      <Input type="destination" />
-      <button className="bg-black p-3 w-full text-white rounded-xl mt-3">
-        Search
-      </button>
+    <div>
+      <div className=" m-3 border-2 border-gray-400 rounded-xl p-3 flex flex-col gap-6">
+        <h3 className="text-[20px] font-bold">Get a ride</h3>
+        <Input
+          source={source}
+          setSource={setSource}
+          destination={destination}
+          setDestination={setDestination}
+          type="source"
+        />
+        <Input
+          source={source}
+          setSource={setSource}
+          destination={destination}
+          setDestination={setDestination}
+          type="destination"
+        />
+        <button
+          onClick={calculateTripDistance}
+          className="bg-black p-3 w-full text-white rounded-xl mt-3"
+        >
+          Search
+        </button>
+      </div>
+      {distance !==0 && <CarListBlock distance={distance}/>}
     </div>
-    {<div>
-    <p>{source?.label}</p>
-    <p>{source?.lat}</p>
-    <p>{source?.lnb}</p>
-    <p>{source?.name}</p>
-    </div>}
-    </>
   );
 }
 
