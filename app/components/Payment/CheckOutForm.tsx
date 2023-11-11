@@ -5,7 +5,7 @@ import { FormEvent } from "react";
 type Props ={
     amount:string
 }
-function CheckOutForm({amount}:Props) {
+function CheckOutForm(amount:Props) {
     const stripe =useStripe();
     const elements:StripeElements| null =useElements();
 
