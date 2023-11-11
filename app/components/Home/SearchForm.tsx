@@ -31,7 +31,7 @@ function SearchForm({ source, setSource, destination, setDestination }: Props) {
   };
   return (
     <div>
-      <div className=" m-3 border-2 border-gray-400 rounded-xl p-3 flex flex-col gap-6">
+      <div className=" m-3 border-2 border-gray-400 rounded-xl p-3 flex flex-col gap-6 ">
         <h3 className="text-[20px] font-bold">Get a ride</h3>
         <Input
           source={source}
