@@ -1,27 +1,48 @@
 "use client"
-import GoogleMap from "./components/Home/GoogleMap";
 import SearchForm from "./components/Home/SearchForm";
-import { SourcePlaceContext } from "@/context/SourcePlace";
-import { DestinationPlaceContext } from "@/context/DestinationPlace";
 import { useState } from "react"
-import GoogleMaps from "./components/Home/GoogleMap";
+import GoogleMapSection from "./components/Home/GoogleMap";
+import { LoadScript } from "@react-google-maps/api";
+export type FieldTypes = {
+  lat: number;
+  lng: number;
+  name: string;
+  label: string;
+} ;
+
 
 export default function Home() {
-  const [source, setSource] = useState(null);
-  const [destination, setDestination] = useState(null);
+  const [source, setSource] = useState<FieldTypes>(
+    {
+          lat: 0,
+          lng: 0,
+          name: '',
+          label:''
+        }
+  );
+  const [destination, setDestination] = useState<FieldTypes>(
+
+    {
+          lat: 0,
+          lng: 0,
+          name: '',
+          label:''
+        }
+  );
 
   return (
-    <SourcePlaceContext.Provider value={{source,setSource}}>
-      <DestinationPlaceContext.Provider value={{destination,setDestination}}>
+        <LoadScript
+        libraries={['places']}
+        googleMapsApiKey='AIzaSyChvhc0pkiHubul1Na-eHbYBB3sCtkUuB4'
+        >
         <div className="m-3 grid grid-cols-1 md:grid-cols-3">
-          <div>
-            <SearchForm />
+          <div >
+            <SearchForm source={source} setSource={setSource} destination={destination} setDestination={setDestination}/>
           </div>
           <div className=" col-span-2">
-            <GoogleMaps /> 
+            <GoogleMapSection source={source}  destination={destination} /> 
           </div>
         </div>
-      </DestinationPlaceContext.Provider>
-    </SourcePlaceContext.Provider>
+        </LoadScript>
   );
 }
