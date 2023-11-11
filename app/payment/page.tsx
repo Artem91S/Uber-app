@@ -7,18 +7,20 @@ import { useSearchParams } from "next/navigation";
 
 function Payment() {
   const params = useSearchParams();
-  const amountOfRide = params.get("amount");
+  const amountOfRide = params.get("amount")!;
   const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHER_KEY!);
   const payment = {
-    mode: "payment",
+    mode:'payment',
     amount: Math.round(Number(amountOfRide) * 100),
-    currency: "uah",
+    currency: 'uah',
   };
-  return (
-    <Elements stripe={stripe} options={payment}>
-      <CheckOutForm amount={amountOfRide} />
-    </Elements>
-  );
+  if(!payment) {
+    return (
+      <Elements stripe={stripe} options={payment} children={<CheckOutForm amount={amountOfRide} />}/>
+        
+    );
+  
+  }
 }
 
 export default Payment;
