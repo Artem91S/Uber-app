@@ -9,14 +9,14 @@ function Payment() {
   const params = useSearchParams();
   const amountOfRide = params.get("amount")!;
   const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHER_KEY!);
-  const payment = {
+  const options = {
     mode:'payment',
     amount: Math.round(Number(amountOfRide) * 100),
     currency: 'uah',
   };
-  if(!payment) {
+  if(!options) {
     return (
-      <Elements stripe={stripe} options={payment} children={<CheckOutForm amount={amountOfRide} />}/>
+      <Elements stripe={stripe} options={options} children={<CheckOutForm amount={amountOfRide} />}/>
         
     );
   
