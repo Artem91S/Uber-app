@@ -24,7 +24,7 @@ function CarListBlock(distance:{distance:number}) {
           setIndexIndex(index)
           setChooseCar(car)
         }}
-        className={`flex md:block lg:flex justify-between flex-1 items-center cursor-pointer p-2 ${activeIndex === index && 'border-2 border-gray-400 rounded-xl bg-slate-200' }`} >
+        className={`flex md:block lg:flex justify-between flex-1 items-center cursor-pointer sm:p-2 ${activeIndex === index && 'border-2 border-gray-400 rounded-xl bg-slate-200' }`} >
           <CarItem car={car} tariff={distance}/>
         </div>
       ))}
