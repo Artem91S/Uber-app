@@ -16,7 +16,9 @@ function Payment() {
     currency: 'uah',
   };
     return (
-      <Elements stripe={stripe} options={options} children={<CheckOutForm amount={amountOfRide} />}/>
+      <Elements stripe={stripe} options={options} >
+        <CheckOutForm amount={amountOfRide} />
+      </Elements>
         
     );
   
