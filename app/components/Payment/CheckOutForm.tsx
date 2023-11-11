@@ -31,7 +31,7 @@ function CheckOutForm(amount:Props) {
             clientSecret:secretKey,
             elements,
             confirmParams:{
-                return_url:"http://localhost:3000/page-success"
+                return_url:"https://uber-app-smoky.vercel.app/page-success"
             }
         })
         
