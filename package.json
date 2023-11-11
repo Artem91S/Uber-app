@@ -11,13 +11,17 @@
   "dependencies": {
     "@clerk/nextjs": "^4.26.2",
     "@react-google-maps/api": "^2.19.2",
+    "@stripe/react-stripe-js": "^2.3.1",
+    "@stripe/stripe-js": "^2.1.11",
     "@types/google.maps": "^3.54.6",
     "@types/react-places-autocomplete": "^7.2.12",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",
     "react-google-places-autocomplete": "^4.0.1",
-    "react-select": "^5.7.7"
+    "react-icons": "^4.11.0",
+    "react-select": "^5.7.7",
+    "stripe": "^14.3.0"
   },
   "devDependencies": {
     "@types/node": "^20",
