@@ -10,6 +10,7 @@ export async function POST(request:any){
     const amount = data.amount;
     try{
         const paymentIntent= await stripe.paymentIntents.create({
+
             amount:Number(amount)*100,
             currency:'UAH'
         }
