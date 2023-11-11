@@ -72,9 +72,9 @@ const Input = ({ type,source,setSource,destination,setDestination }: Props) => {
             getLatAndLng(place, type);
             setValue(place);
           },
-          components: {
-            DropdownIndicator: false,
-          },
+          // components: {
+          //   DropdownIndicator: false,
+          // },
           placeholder: placeholder,
           className: "w-full",
           styles: {
