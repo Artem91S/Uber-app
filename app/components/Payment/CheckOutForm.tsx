@@ -27,7 +27,7 @@ function CheckOutForm({amount}:Props) {
 
         const secretKey =await response.json()
 
-        const {error} =await stripe?.confirmPayment({
+        await stripe?.confirmPayment({
             clientSecret:secretKey,
             elements,
             confirmParams:{

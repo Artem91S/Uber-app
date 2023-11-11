@@ -5,24 +5,20 @@ import {
   OverlayView,
   OverlayViewF,
 } from "@react-google-maps/api";
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 export type FieldTypes = {
   lat: number;
   lng: number;
   name: string;
   label: string;
-} ;
-type Props ={
-  source:FieldTypes;
-  destination:FieldTypes;
-}
+};
+type Props = {
+  source: FieldTypes;
+  destination: FieldTypes;
+};
 
-function GoogleMapSection({source,destination}:Props) {
+function GoogleMapSection({ source, destination }: Props) {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [direction, setDirections] = useState();
   const [center, setCenter] = useState({
@@ -39,12 +35,16 @@ function GoogleMapSection({source,destination}:Props) {
     DirectionsService.route(
       {
         origin: { lat: source.lat, lng: source.lng },
-        destination: { lat: destination?.lat!, lng: destination?.lng!},
+        destination: { lat: destination?.lat!, lng: destination?.lng! },
         travelMode: google.maps.TravelMode.DRIVING,
       },
-      (result: google.maps.DirectionsResult | null , status) => {
+      (result:any, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          setDirections(result);
+          
+            setDirections(result);
+        
+
+     
         } else {
           console.error("My service error");
         }
@@ -82,7 +82,7 @@ function GoogleMapSection({source,destination}:Props) {
       directionRoute();
     }
   }, [destination]);
-  const onLoad = useCallback(function callback(map:google.maps.Map | null) {
+  const onLoad = useCallback(function callback(map: google.maps.Map | null) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map?.fitBounds(bounds);
 
@@ -100,18 +100,18 @@ function GoogleMapSection({source,destination}:Props) {
       onUnmount={onUnmount}
     >
       <MarkerF
-        position={{ lat:source.lat, lng: source.lng }}
+        position={{ lat: source.lat, lng: source.lng }}
         icon={{
           url: "/source.png",
           scaledSize: {
-            equals:Boolean,
+            equals: Boolean,
             width: 20,
             height: 20,
           },
         }}
       >
         <OverlayViewF
-          position={{ lat:source.lat, lng:source.lng}}
+          position={{ lat: source.lat, lng: source.lng }}
           mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
         >
           <div className="p-2 bg-white rounded-xl">
@@ -125,7 +125,7 @@ function GoogleMapSection({source,destination}:Props) {
         icon={{
           url: "/dest.png",
           scaledSize: {
-            equals:Boolean,
+            equals: Boolean,
             width: 20,
             height: 20,
           },
@@ -156,4 +156,3 @@ function GoogleMapSection({source,destination}:Props) {
 }
 
 export default GoogleMapSection;
-
