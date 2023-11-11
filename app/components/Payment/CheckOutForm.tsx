@@ -41,7 +41,7 @@ function CheckOutForm(amount:Props) {
     <div className='flex justify-center items-center py-5 md:py-10' >
         <form onSubmit={handleSubmit} className=' flex flex-col gap-6 sm:w-[50%]'>
             <PaymentElement className=''/>
-            <button className='p-2 bg-black text-white rounded-xl mt-5 text-center '>To Pay</button>
+            <button type='submit' className='p-2 bg-black text-white rounded-xl mt-5 text-center '>To Pay</button>
         </form>
     </div>
   )
