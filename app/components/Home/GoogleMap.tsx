@@ -1,3 +1,4 @@
+import { FieldTypes } from "@/type";
 import {
   DirectionsRenderer,
   GoogleMap,
@@ -6,13 +7,6 @@ import {
   OverlayViewF,
 } from "@react-google-maps/api";
 import React, { useCallback, useMemo, useState } from "react";
-
-export type FieldTypes = {
-  lat: number;
-  lng: number;
-  name: string;
-  label: string;
-};
 type Props = {
   source: FieldTypes;
   destination: FieldTypes;
@@ -40,11 +34,7 @@ function GoogleMapSection({ source, destination }: Props) {
       },
       (result:any, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          
             setDirections(result);
-        
-
-     
         } else {
           console.error("My service error");
         }

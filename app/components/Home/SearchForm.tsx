@@ -6,12 +6,7 @@ import {
 } from "react";
 import Input from "../Input";
 import CarListBlock from "./CarListBlock";
-export type FieldTypes = {
-  lat: number;
-  lng: number;
-  name: string;
-  label: string;
-};
+import { FieldTypes } from "@/type";
 type Props = {
   source: FieldTypes;
   destination: FieldTypes;
@@ -34,16 +29,12 @@ function SearchForm({ source, setSource, destination, setDestination }: Props) {
       <div className=" m-3 border-2 border-gray-400 rounded-xl p-3 flex flex-col gap-6 ">
         <h3 className="text-[20px] font-bold">Get a ride</h3>
         <Input
-          source={source}
           setSource={setSource}
-          destination={destination}
           setDestination={setDestination}
           type="source"
         />
         <Input
-          source={source}
           setSource={setSource}
-          destination={destination}
           setDestination={setDestination}
           type="destination"
         />

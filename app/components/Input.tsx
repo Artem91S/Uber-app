@@ -1,31 +1,20 @@
 "use client";
-// import { DestinationPlaceContext } from "@/context/DestinationPlace";
-// import { SourcePlaceContext } from "@/context/SourcePlace";
+import { FieldTypes } from "@/type";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction,useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { Option } from "react-google-places-autocomplete/build/types";
 import { SingleValue } from "react-select";
-export type FieldTypes = {
-  lat: number;
-  lng: number;
-  name: string;
-  label: string;
-};
+
 type Props = {
   type: string;
-  source:FieldTypes;
-  destination:FieldTypes;
   setSource:Dispatch<SetStateAction<FieldTypes>>;
   setDestination:Dispatch<SetStateAction<FieldTypes>>;
 };
 
-const Input = ({ type,source,setSource,destination,setDestination }: Props) => {
+const Input = ({ type,setSource,setDestination }: Props) => {
   const [value, setValue] = useState<Option | null>(null);
   const [placeholder, setPlaceholder] = useState("");
-  // const { setSource } = useContext(SourcePlaceContext);
-  // const { setDestination } = useContext(DestinationPlaceContext);
-
   useEffect(() => {
     type === "source"
       ? setPlaceholder("Pickup Location")
@@ -45,6 +34,7 @@ const Input = ({ type,source,setSource,destination,setDestination }: Props) => {
             name: place.formatted_address!,
             label: place.name!,
           });
+          
         } else {
           setDestination({
             lat: place.geometry.location.lat(),
@@ -66,6 +56,7 @@ const Input = ({ type,source,setSource,destination,setDestination }: Props) => {
         height={17}
       />
       <GooglePlacesAutocomplete
+       
         selectProps={{
           value,
           onChange: (place: SingleValue<Option>) => {

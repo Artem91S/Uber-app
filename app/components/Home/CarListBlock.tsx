@@ -4,14 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 function CarListBlock(distance:{distance:number}) {
   const [activeIndex,setIndexIndex] =useState(1);
-  const[chooseCar,setChooseCar]=useState({
-    id:2,
-    name:'Comfort',
-    seat:4,
-    dest:'Newer cars with extra legroom',
-    amount:44,
-    image:'/UberComfort.png'
-  })
+  const[chooseCar,setChooseCar]=useState(carsData[1])
   const route =useRouter()
   
   return (
